@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <style>
+        #item{
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+        #item2{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+        #item3{
+            width: 100px;
+            height: 100px;
+            background-color: green;
+        }
+
+        #box{
+            width: 300px;
+            height: 300px;
+            border: dashed 2px;
+        }
+    </style>
+</head>
+<body>
+    <div draggable="true" id="item"> Drag Item</div>
+    <div draggable="true" id="item2"> Drag Item</div>
+    <div draggable="true" id="item3"> Drag Item</div>
+    <br /><br />
+    <div id="box">Drop here</div>
+
+
+    <script>
+        var item = document.getElementById("item");
+        var item2 = document.getElementById("item2");
+        var item3 = document.getElementById("item3");
+        var box = document.getElementById('box');
+
+        item.addEventListener("dragstart" , function(e){
+            console.log("1 start");
+            e.dataTransfer.setData('id',e.target.id);
+        });
+        item2.addEventListener("dragstart" , function(e){
+            console.log("2 start");
+            e.dataTransfer.setData('id',e.target.id);
+        });
+        item3.addEventListener("dragstart" , function(e){
+            console.log("3 start");
+            e.dataTransfer.setData('id',e.target.id);
+        });
+
+        box.addEventListener('dragover', function (e){
+            console.log('dregover');
+            e.preventDefault()
+        });
+        box.addEventListener('drop', function(e){
+            console.log('drop');
+            var dragElemId =e.dataTransfer.getData('id');
+            console.log(dragElemId);
+            var elem =document.getElementById(dragElemId);
+            box.append(elem);
+        });
+    </script>
+</body>
+</html>

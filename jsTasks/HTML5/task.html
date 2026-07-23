@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+    <script src="https://kit.fontawesome.com/c53e7ca7e4.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            padding: 20px;
+            background-color: aliceblue;
+        }
+
+        .contain {
+            max-width: 500px;
+        }
+
+        #vid {
+            width: 500px;
+        }
+
+        #progress {
+            width: 500px;
+        }
+
+        .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            border: solid gray 2px;
+            height: 40px;
+        }
+
+        .voice {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border: solid gray 2px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contain">
+
+        <div class="vid">
+            <video id="vid" src="videos/vid.mp4"></video>
+            <input type="range" id="progress" value="0" min="0" step="1">
+            <span id="time">00:00:00</span>
+        </div>
+        <br /><br />
+
+
+        <div class="buttons">
+            <button id="play"><i class="fa-solid fa-play"></i></button>
+            <button id="pause"><i class="fa-solid fa-pause"></i></button>
+            <button id="back20"><i class="fa-solid fa-backward-fast"></i></button>
+            <button id="back10"><i class="fa-solid fa-backward-step"></i></button>
+            <button id="for10"><i class="fa-solid fa-forward-step"></i></button>
+            <button id="for20"><i class="fa-solid fa-forward-fast"></i></button>
+            <button id="restart"><i class="fa-solid fa-rotate-right"></i></button>
+        </div>
+        <br />
+
+        <div class='voice'>
+            <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" />
+            <button id="mute"><i class="fa-solid fa-volume-high"></i></button>
+            <select id="speed">
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+            </select>
+        </div>
+        <br />
+
+
+    </div>
+
+    <script>
+        let video = document.getElementById("vid");
+        let time = document.getElementById("time");
+        let speed = document.getElementById("speed");
+        let playBtn = document.getElementById("play");
+        let pauseBtn = document.getElementById("pause");
+        let back20 = document.getElementById("back20");
+        let back10 = document.getElementById("back10");
+        let for10 = document.getElementById("for10");
+        let for20 = document.getElementById("for20");
+        let restartBtn = document.getElementById('restart');
+        let muteBtn = document.getElementById("mute");
+        let volumeSlider = document.getElementById("volume");
+
+
+        playBtn.addEventListener("click", function () {
+            video.play();
+        });
+
+        pauseBtn.addEventListener("click", function () {
+            video.pause();
+        });
+
+        back10.addEventListener("click", function () {
+            video.currentTime -= 10;
+        });
+
+        back20.addEventListener("click", function () {
+            video.currentTime -= 20;
+        });
+
+        for10.addEventListener("click", function () {
+            video.currentTime += 10;
+        });
+
+        for20.addEventListener("click", function () {
+            video.currentTime += 20;
+        });
+
+        restartBtn.addEventListener("click", function () {
+            video.currentTime = 0;
+            video.play();
+        });
+
+        volumeSlider.addEventListener("input", function () {
+            video.volume = volumeSlider.value;
+
+            if (video.volume == 0) {
+                video.muted = true;
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            } else {
+                video.muted = false;
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+            }
+        });
+
+        muteBtn.addEventListener("click", function () {
+            video.muted = !video.muted;
+
+            if (video.muted) {
+                volumeSlider.value = 0;
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            } else {
+                volumeSlider.value = 1;
+                video.volume = 1;
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+            }
+        });
+
+        video.addEventListener("timeupdate", function () {
+            progress.value = video.currentTime;
+            progress.max = video.duration;
+
+            time.textContent = formatTime(video.currentTime) + " / " + formatTime(video.duration);
+        });
+
+        progress.addEventListener("input", function () {
+            video.currentTime = progress.value;
+        });
+
+        speed.addEventListener("change", function () {
+            video.playbackRate = speed.value;
+        });
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "00:00:00";
+
+            var hrs = Math.floor(seconds / 3600);
+            var mins = Math.floor((seconds % 3600) / 60);
+            var secs = Math.floor(seconds % 60);
+
+            if (hrs < 10) hrs = "0" + hrs;
+            if (mins < 10) mins = "0" + mins;
+            if (secs < 10) secs = "0" + secs;
+
+            return hrs + ":" + mins + ":" + secs;
+        };
+
+
+    </script>
+</body>
+
+</html>
