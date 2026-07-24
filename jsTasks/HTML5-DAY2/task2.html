@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 2 - Hover to Blink</title>
+    <style>
+        .blink-btn {
+            padding: 15px 40px;
+            background-color: #e6ebf5;
+            border: 1px solid #b3c6ff;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .blink-btn:hover {
+            background-color: #ffd9e6;
+            box-shadow: 0 0 15px 5px rgba(0, 123, 255, 0.4);
+            border-color: transparent;
+            animation: blinkEffect 0.8s linear infinite;
+        }
+
+        @keyframes blinkEffect {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="blink-btn">Hover to Blink</button>
+</body>
+
+</html>
