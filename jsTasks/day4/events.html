@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+
+    <style>
+        #form-section {
+            width: 50%;
+            background-color: beige;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="form-section" name="form">
+        <form action="page1.html" method="get">
+            <fieldset>
+                <label for="">Name</label>
+                <input type="text" name="usrName" id="" />
+                <br />
+                <label for="">Mobile</label>
+                <input type="tel" pattern="^01[0-9]{9}$" name="usrMobile" />
+            </fieldset>
+            <br />
+            <fieldset>
+                <label for="">When you join work</label>
+                <input type="date" name="useDate"/>
+                <br />
+                <label for="">Email</label>
+                <input type="email" name="usrEmail" />
+            </fieldset>
+            <br />
+            <input type="submit" value="Sign-up" />
+
+        </form>
+    </section>
+
+    <!-- script goes here -->
+    <script>
+        // console.log("hi");
+
+        var myform = document.getElementsByTagName('form')[0];
+        console.log(myform);
+        var usrName = document.getElementsByName('usrName')[0];
+        mobile = document.getElementsByName('usrMobile')[0];
+        myform.addEventListener('submit', (e) => {
+            console.log('my form was submited');
+            e.preventDefault();
+            console.log(usrName.value);
+        });
+
+
+
+    </script>
+</body>
+
+</html>
